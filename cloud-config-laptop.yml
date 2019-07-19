@@ -1,0 +1,44 @@
+#cloud-config for Laptops
+
+hostname: firstboot
+
+# Network changes need a networking service restart: sudo system-docker restart network
+# Note also that wifi modules most likely live in the kernel-extras service, so you need
+# to enable them as well:
+#   sudo ros service enable kernel-extras
+#   sudo ros service up kernel-extras
+# More info here: https://rancher.com/docs/os/v1.x/en/installation/configuration/loading-kernel-modules/#try-the-kernel-extras-service
+rancher:
+  network:
+    interfaces:
+      wlan0:
+        wifi_network: net1
+    wifi_networks:
+      net1:
+        ssid: ""
+        psk: ""
+        scan_ssid: 1
+
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3OCYYwHa1sQc9sPnr6ugdC94qrbVlQcfwXuOwc2WiD5Nsuiz6VHdGVKWjR0gqRlMQTDUw+GBcPMBak+8RsMCghGJVmes3bhg3/m+p56/kaY7bFhEz89oL2BnSEGK+KBsQ71Xu+LXtX0kVdXejiszsT6c7lG9oLn8dRaQjIdMlxZumH+SbJoZ0yJvLw7o8OyIkzUUoZobJgxmKUI2o5Wxq4kDLvg1gVSuKE/HGwNs9X9VpSVxMZCVGCL8Ky5vrRbGLwVM78HQQX73VSzcVnfzdb7dVi2Yi+tMYN7ge8RAdb8kQ6p80ikGc/YAC+8G8xLvkjAuI6o+2ouapLgVwR3051xu7anxqufg745JV7muz2v+8db/N79ToZtFBmn8vkp5vES91p+/7Tb5HyBkqqvdTQ6Esc54+OyPc2ZLwQCia+t6rE2l6HEWhM63BMstpf2dCrIhcWQ4H53LbukeY16of/4+37UIh20TyNdSag4nfkbZbo1r3ZXjiM99ogYXx1mUeABN/HA1q74Move0AsCqbDSUGMsv7hMUDAy4wa7ESZMT/flsJMiRiAnruSp2VDifoGmqFl9bpOkpfn7pDqBxAjeaXMekktNLaY9DruIhTxTISiNzWkRvAAVpRvFjIiS2ZQLS8oe0i+vcC7OrizE0wOnnJo7C8Z3TRh21vfP1lpw== rancher@20190719
+
+# Disable system suspend when closing laptop lid
+# More info here: https://github.com/rancher/os/issues/1388
+# Note that this must be run on the acpid container, per https://github.com/rancher/os/issues/2457
+write_files:
+  - container: acpid
+    path: /etc/acpi/suspend.sh
+    permissions: "0644"
+    owner: root
+    content: |
+      exit 0
+
+write_files:
+  - path: /etc/rc.local
+    permissions: "0755"
+    owner: root
+    content: |
+      #!/bin/bash
+      wait-for-docker
+      echo "I'm doing things on start"
+
