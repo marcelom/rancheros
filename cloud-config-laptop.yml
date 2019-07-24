@@ -11,6 +11,8 @@ hostname: firstboot
 rancher:
   network:
     interfaces:
+      eth0:
+        dhcp: true
       wlan0:
         dhcp: true
         wifi_network: net1
@@ -19,6 +21,8 @@ rancher:
         ssid: ""
         psk: ""
         scan_ssid: 1
+  services_include:
+    kernel-extras: true
 
 ssh_authorized_keys:
   - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3OCYYwHa1sQc9sPnr6ugdC94qrbVlQcfwXuOwc2WiD5Nsuiz6VHdGVKWjR0gqRlMQTDUw+GBcPMBak+8RsMCghGJVmes3bhg3/m+p56/kaY7bFhEz89oL2BnSEGK+KBsQ71Xu+LXtX0kVdXejiszsT6c7lG9oLn8dRaQjIdMlxZumH+SbJoZ0yJvLw7o8OyIkzUUoZobJgxmKUI2o5Wxq4kDLvg1gVSuKE/HGwNs9X9VpSVxMZCVGCL8Ky5vrRbGLwVM78HQQX73VSzcVnfzdb7dVi2Yi+tMYN7ge8RAdb8kQ6p80ikGc/YAC+8G8xLvkjAuI6o+2ouapLgVwR3051xu7anxqufg745JV7muz2v+8db/N79ToZtFBmn8vkp5vES91p+/7Tb5HyBkqqvdTQ6Esc54+OyPc2ZLwQCia+t6rE2l6HEWhM63BMstpf2dCrIhcWQ4H53LbukeY16of/4+37UIh20TyNdSag4nfkbZbo1r3ZXjiM99ogYXx1mUeABN/HA1q74Move0AsCqbDSUGMsv7hMUDAy4wa7ESZMT/flsJMiRiAnruSp2VDifoGmqFl9bpOkpfn7pDqBxAjeaXMekktNLaY9DruIhTxTISiNzWkRvAAVpRvFjIiS2ZQLS8oe0i+vcC7OrizE0wOnnJo7C8Z3TRh21vfP1lpw== rancher@20190719
