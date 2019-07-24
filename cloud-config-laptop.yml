@@ -1,5 +1,6 @@
 #cloud-config for Laptops
 
+# Change it with sudo ros c set hostname YOURHOSTNAME
 hostname: firstboot
 
 # Network changes need a networking service restart: sudo system-docker restart network
@@ -44,4 +45,3 @@ write_files:
       #!/bin/bash
       wait-for-docker
       echo "I'm doing things on start"
-
