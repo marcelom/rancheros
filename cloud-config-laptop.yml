@@ -12,6 +12,7 @@ rancher:
   network:
     interfaces:
       wlan0:
+        dhcp: true
         wifi_network: net1
     wifi_networks:
       net1:
@@ -32,8 +33,6 @@ write_files:
     owner: root
     content: |
       exit 0
-
-write_files:
   - path: /etc/rc.local
     permissions: "0755"
     owner: root
